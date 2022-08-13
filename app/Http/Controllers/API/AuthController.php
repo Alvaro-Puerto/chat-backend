@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\API;
+
+use App\Events\UserOnlineEvent;
 use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller; 
 use Illuminate\Support\Facades\Hash;
@@ -47,7 +49,7 @@ class AuthController extends Controller
             if(Hash::check($request->password, $user->password )) {
                 #$token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-
+                broadcast(new UserOnlineEvent());
                 return response()->json(['token' => $token], 200);
             } else {
                 return response()->json(['error' => 'Por favor revise sus credenciales'], 500);

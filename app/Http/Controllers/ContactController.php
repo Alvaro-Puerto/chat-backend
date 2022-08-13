@@ -12,7 +12,10 @@ class ContactController extends Controller
     public function get(Request $request) {
        $user = User::find(Auth::user()->id);
        $contacts = $user->contact;
-
+        
+       foreach($contacts as $item) {
+           $item->active = false;
+       }
        return response()->json($contacts);
     }
 
