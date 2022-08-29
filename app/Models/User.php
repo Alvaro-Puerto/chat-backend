@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
 
 
@@ -45,7 +46,14 @@ class User extends Authenticatable
     }
 
     public function conversation() {
-        return $this->belongsToMany(Conversation::class, Participant::class, 'user_id');
+        return $this->belongsToMany(Conversation::class, Participant::class);
+    }
+
+    public function getConversationWithUser($id) {
+        $user = User::find(Auth::user()->id);
+        return $user->conversation()->whereHas('participant', function ($query) use ($id) {
+            $query->where('users.id', $id);
+        })->first();
     }
     
 }

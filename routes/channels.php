@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Conversation;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -20,4 +21,12 @@ Broadcast::channel('user.online', function ($user) {
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('room.{id}', function($user, $id) {
+    $conversation = Conversation::find($id);
+    if($conversation->participant()->where('user_id', $user->id)->exists()) {
+    
+        return true;
+    }
 });

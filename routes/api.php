@@ -26,5 +26,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/contact', 'ContactController@get');
     Route::delete('/contact/{id}', 'ContactController@detach');
 
-    Route::get('/conversation/{id}', 'ConversationController@get');
+    Route::get('/conversation/{id}', 'ConversationController@detail');
+    Route::post('/conversation/message', 'ConversationController@create');
+    Route::get('/conversation', 'ConversationController@get');
 });

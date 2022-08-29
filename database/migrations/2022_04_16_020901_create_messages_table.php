@@ -16,10 +16,15 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('content');
-            $table->integer('type')->nullable();
+         
             $table->foreignId('user_id');
             $table->foreign('user_id')
                   ->on('users')
+                  ->references('id')
+                  ->onDelete('cascade');
+            $table->foreignId('conversation_id');
+            $table->foreign('conversation_id')
+                  ->on('conversations')
                   ->references('id')
                   ->onDelete('cascade');
             $table->timestamps();
