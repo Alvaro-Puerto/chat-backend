@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ConversationController extends Controller
 {
     //
-    public function get() {
+    public function index() {
        $conversations = User::find(Auth::user()->id)
                              ->conversation()
                              ->with('getLastMessage')
@@ -23,7 +23,7 @@ class ConversationController extends Controller
         return response()->json($conversations);
     }
 
-    public function detail($id) {
+    public function show($id) {
         
         $user = User::find(Auth::user()->id);
        
@@ -39,7 +39,7 @@ class ConversationController extends Controller
         return response()->json($conversation);
     }
 
-    public function create(Request $request) {
+    public function store(Request $request) {
         $user = User::find(Auth::user()->id);
         $guess = User::find($request->participant[0]['id']);
         $conversation = $user->getConversationWithUser($guess->id);
