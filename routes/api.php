@@ -20,13 +20,7 @@ Route::post('register', 'API\AuthController@register');
 Route::middleware(['auth:api'])->group(function () {
     Route::get('logout', 'API\AuthController@logout');
     Route::get('/user/search/{name}', 'UserController@search');
-
     Route::get('/user/contact/{user_guess}', 'UserController@addContact');
-
-    Route::get('/contact', 'ContactController@get');
-    Route::delete('/contact/{id}', 'ContactController@detach');
-
-    Route::get('/conversation/{id}', 'ConversationController@detail');
-    Route::post('/conversation/message', 'ConversationController@create');
-    Route::get('/conversation', 'ConversationController@get');
+    Route::resource('/contact', 'ContactController');
+    Route::resource('/conversation', 'ConversationController');
 });
