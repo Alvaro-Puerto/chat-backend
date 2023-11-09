@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ContactController extends Controller
 {
     //
-    public function get(Request $request) {
+    public function index(Request $request) {
        $user = User::find(Auth::user()->id);
        $contacts = $user->contact;
         
@@ -19,7 +19,7 @@ class ContactController extends Controller
        return response()->json($contacts);
     }
 
-    public function detach($id) {
+    public function delete($id) {
         $contact = User::find($id);
         
         $user = User::find(Auth::user()->id);
