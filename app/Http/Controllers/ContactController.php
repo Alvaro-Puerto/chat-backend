@@ -19,7 +19,7 @@ class ContactController extends Controller
        return response()->json($contacts);
     }
 
-    public function delete($id) {
+    public function destroy($id) {
         $contact = User::find($id);
         
         $user = User::find(Auth::user()->id);
